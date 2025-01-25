@@ -1,11 +1,9 @@
 package com.shiva.kafka_producer.controller;
 
+import com.shiva.kafka_producer.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.shiva.kafka_producer.service.KafkaMessagePublisher;
 
 @RestController
@@ -23,8 +21,8 @@ public class KafkaMessageController {
         return ResponseEntity.accepted().body("message publish..");
     }
 
-    @GetMapping("/hello")
-    public void getMessage(){
-        System.out.println("Hello welcome");
+    @GetMapping("/publish")
+    public void getMessage(@RequestBody Employee employee){
+        kafkaMessagePublisher.sendEventsToKafkaTopic(employee);
     }
 }
